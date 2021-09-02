@@ -1,0 +1,23 @@
+{
+  "name": "summit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nezam0003/Node-JS-Summit.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nezam0003/Node-JS-Summit/issues"
+  },
+  "homepage": "https://github.com/nezam0003/Node-JS-Summit#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
