@@ -15,8 +15,8 @@ const data = require("./lib/data");
 const app = {};
 
 // test writing file
-data.create("test", "newFile", { name: "bangladesh" }, (err) => {
-  console.log(`error was ${err}`);
+data.delete("test", "newFile", (err) => {
+  console.log(err);
 });
 
 // create server
