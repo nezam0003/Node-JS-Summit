@@ -15,9 +15,9 @@ const data = require("./lib/data");
 const app = {};
 
 // test writing file
-data.delete("test", "newFile", (err) => {
-  console.log(err);
-});
+// data.delete("test", "newFile", (err) => {
+//   console.log(err);
+// });
 
 // create server
 app.createServer = () => {
