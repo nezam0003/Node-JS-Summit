@@ -24,7 +24,7 @@ utilities.pasrseJSON = (jsonString) => {
   return output;
 };
 
-// conver password to hash
+// convert password to hash
 utilities.hash = (str) => {
   if (typeof str === "string" && str.length > 0) {
     const hash = crypto
@@ -35,4 +35,25 @@ utilities.hash = (str) => {
   }
   return false;
 };
+
+utilities.createRandomString = (stringLength) => {
+  let length = stringLength;
+  length =
+    typeof stringLength === "number" && stringLength > 0 ? stringLength : false;
+
+  if (length) {
+    let possibleCharacters = "abcdefghijklmnopqrstuvwxyz0123456789";
+    let output = "";
+    for (let i = 1; i <= length; i += 1) {
+      let randomCharacter = possibleCharacters.charAt(
+        Math.floor(Math.random() * possibleCharacters.length)
+      );
+      output += randomCharacter;
+    }
+    return output;
+  } else {
+    return false;
+  }
+};
+
 module.exports = utilities;

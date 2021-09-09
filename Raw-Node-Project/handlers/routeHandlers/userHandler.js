@@ -90,7 +90,7 @@ handler._users.post = (requestProperties, callback) => {
 };
 
 // get handler
-handler._users.get = (requestProperties, callBack) => {
+handler._users.get = (requestProperties, callback) => {
   // check the phone number if valid
   const phone =
     typeof requestProperties.queryStringObject.phone === "string" &&
@@ -104,22 +104,22 @@ handler._users.get = (requestProperties, callBack) => {
       const newUser = { ...pasrseJSON(user) };
       if (!err && user) {
         delete newUser.password;
-        callBack(200, newUser);
+        callback(200, newUser);
       } else {
-        callBack(404, {
+        callback(404, {
           error: "sorry user not exists",
         });
       }
     });
   } else {
-    callBack(404, {
+    callback(404, {
       error: "sorry requested user was not found",
     });
   }
 };
 
 // put handler
-handler._users.put = (requestProperties, callBack) => {
+handler._users.put = (requestProperties, callback) => {
   const firstName =
     typeof requestProperties.body.firstName === "string" &&
     requestProperties.body.firstName.trim().length > 0
@@ -163,35 +163,35 @@ handler._users.put = (requestProperties, callBack) => {
           // update to db
           data.update("users", phone, userData, (err) => {
             if (!err) {
-              callBack(200, {
+              callback(200, {
                 success: "data updated successfully",
               });
             } else {
-              callBack(500, {
+              callback(500, {
                 error: "there was an error while updating database",
               });
             }
           });
         } else {
-          callBack(400, {
+          callback(400, {
             error: "you have a problem with your request",
           });
         }
       });
     } else {
-      callBack(400, {
+      callback(400, {
         error: "you have a problem with your request",
       });
     }
   } else {
-    callBack(400, {
+    callback(400, {
       error: "not a valid user. please try again",
     });
   }
 };
 
 // delete handler
-handler._users.delete = (requestProperties, callBack) => {
+handler._users.delete = (requestProperties, callback) => {
   // check the phone number if valid
   const phone =
     typeof requestProperties.queryStringObject.phone === "string" &&
@@ -205,23 +205,23 @@ handler._users.delete = (requestProperties, callBack) => {
       if (!err) {
         data.delete("users", phone, (err) => {
           if (!err) {
-            callBack(200, {
+            callback(200, {
               success: "user removed",
             });
           } else {
-            callBack(500, {
+            callback(500, {
               error: "cannot removed user",
             });
           }
         });
       } else {
-        callBack(500, {
+        callback(500, {
           error: "there was a server side error",
         });
       }
     });
   } else {
-    callBack(400, {
+    callback(400, {
       error: "there was a problem in your request",
     });
   }
