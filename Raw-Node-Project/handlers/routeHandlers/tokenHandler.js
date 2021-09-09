@@ -28,6 +28,7 @@ handler.tokenHandler = (requestProperties, callback) => {
 
 handler._token = {};
 
+// Token Post handler
 handler._token.post = (requestProperties, callback) => {
   const phone =
     typeof requestProperties.body.phone === "string" &&
@@ -76,14 +77,39 @@ handler._token.post = (requestProperties, callback) => {
   }
 };
 
-// get handler
-handler._token.get = (requestProperties, callBack) => {};
+// token get handler
+handler._token.get = (requestProperties, callback) => {
+  // check the id if valid
+  const id =
+    typeof requestProperties.queryStringObject.id === "string" &&
+    requestProperties.queryStringObject.id.trim().length === 20
+      ? requestProperties.queryStringObject.id
+      : false;
+
+  if (id) {
+    // lookup for token
+    data.read("tokens", id, (err, tokenData) => {
+      const token = { ...pasrseJSON(tokenData) };
+      if (!err && token) {
+        callback(200, token);
+      } else {
+        callback(404, {
+          error: "sorry token not found",
+        });
+      }
+    });
+  } else {
+    callback(404, {
+      error: "sorry you have a problem with your request",
+    });
+  }
+};
 
 // put handler
-handler._token.put = (requestProperties, callBack) => {};
+handler._token.put = (requestProperties, callback) => {};
 
 // delete handler
-handler._token.delete = (requestProperties, callBack) => {};
+handler._token.delete = (requestProperties, callback) => {};
 
 // export handler
 module.exports = handler;
