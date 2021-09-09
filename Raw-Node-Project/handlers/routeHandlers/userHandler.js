@@ -202,7 +202,7 @@ handler._users.delete = (requestProperties, callback) => {
   if (phone) {
     // lookup user
     data.read("users", phone, (err, deleteItem) => {
-      if (!err) {
+      if (!err && deleteItem) {
         data.delete("users", phone, (err) => {
           if (!err) {
             callback(200, {
