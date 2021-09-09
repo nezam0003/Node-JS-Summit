@@ -105,8 +105,51 @@ handler._token.get = (requestProperties, callback) => {
   }
 };
 
-// put handler
-handler._token.put = (requestProperties, callback) => {};
+// token put handler
+handler._token.put = (requestProperties, callback) => {
+  const id =
+    typeof requestProperties.body.id === "string" &&
+    requestProperties.body.id.trim().length === 20
+      ? requestProperties.body.id
+      : false;
+
+  const extend =
+    typeof requestProperties.body.extend === "boolean" &&
+    requestProperties.body.extend === true
+      ? true
+      : false;
+
+  if (id && extend) {
+    // check if token is valid
+    data.read("tokens", id, (err1, tokenData) => {
+      let tokenObject = pasrseJSON(tokenData);
+      if (tokenObject.expires > Date.now()) {
+        tokenObject.expires = Date.now() + 60 * 60 * 1000;
+
+        // store the update data
+        data.update("tokens", id, tokenObject, (err2) => {
+          if (!err2) {
+            callback(200, {
+              success: "token updated successfully",
+            });
+          } else {
+            callback(500, {
+              error: "sorry can not update token",
+            });
+          }
+        });
+      } else {
+        callback(400, {
+          error: "sorry token expired",
+        });
+      }
+    });
+  } else {
+    callback(400, {
+      error: "there was a problem with your request",
+    });
+  }
+};
 
 // delete handler
 handler._token.delete = (requestProperties, callback) => {};
