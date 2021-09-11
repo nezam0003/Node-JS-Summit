@@ -47,7 +47,7 @@ handler._token.post = (requestProperties, callback) => {
       const hashedPassword = hash(password);
       if (hashedPassword === pasrseJSON(userData).password) {
         const tokenId = createRandomString(20);
-        const expires = Date.now() + 60 * 60 * 1000;
+        const expires = Date.now() + 24 * 60 * 60 * 1000;
         const tokenObject = {
           phone,
           id: tokenId,
@@ -124,7 +124,7 @@ handler._token.put = (requestProperties, callback) => {
     data.read("tokens", id, (err1, tokenData) => {
       let tokenObject = pasrseJSON(tokenData);
       if (tokenObject.expires > Date.now()) {
-        tokenObject.expires = Date.now() + 60 * 60 * 1000;
+        tokenObject.expires = Date.now() + 24 * 60 * 60 * 1000;
 
         // store the update data
         data.update("tokens", id, tokenObject, (err2) => {
