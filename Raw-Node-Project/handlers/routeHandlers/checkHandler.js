@@ -159,7 +159,47 @@ handler._check.post = (requestProperties, callback) => {
 };
 
 // check get handler
-handler._check.get = (requestProperties, callback) => {};
+handler._check.get = (requestProperties, callback) => {
+  const id =
+    typeof requestProperties.queryStringObject.id === "string" &&
+    requestProperties.queryStringObject.id.trim().length === 20
+      ? requestProperties.queryStringObject.id
+      : false;
+
+  if (id) {
+    // lookup the check
+    data.read("checks", id, (err1, checkData) => {
+      if (!err1 && checkData) {
+        let token =
+          typeof requestProperties.headersObject.token === "string"
+            ? requestProperties.headersObject.token
+            : false;
+
+        tokenHandler._token.verify(
+          token,
+          pasrseJSON(checkData).userPhoneNumber,
+          (tokenIsValid) => {
+            if (tokenIsValid) {
+              callback(200, pasrseJSON(checkData));
+            } else {
+              callback(403, {
+                error: "authentication error",
+              });
+            }
+          }
+        );
+      } else {
+        callback(500, {
+          error: "sorry you have a problem",
+        });
+      }
+    });
+  } else {
+    callback(400, {
+      error: "sorry you have a problem with your request",
+    });
+  }
+};
 
 // check put handler
 handler._check.put = (requestProperties, callback) => {};
