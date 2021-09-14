@@ -1,6 +1,6 @@
 // Dependencies
 const express = require("express");
-const { handleReqRes } = require("./17-Application-object/handleReqRes");
+const { handleReqRes } = require("./handleReqRes");
 const app = express();
 const appTwo = express();
 const appThree = express();
