@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>file upload</title>
+    <style>
+      .content {
+        width: 50%;
+        margin: 10% auto;
+        padding: 1rem;
+        color: #fff;
+        background: #333;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <form
+        action="http://localhost:4000/"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <input type="file" name="avater" />
+        <input type="file" name="doc" />
+        <!-- <input type="file" name="gallery" multiple /> -->
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+  </body>
+</html>
