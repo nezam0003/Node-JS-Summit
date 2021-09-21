@@ -30,6 +30,35 @@ router.get("/", async (req, res) => {
   }
 });
 
+// get active todos
+router.get("/active", async (req, res) => {
+  try {
+    const todo = new Todo();
+    const data = await todo.findActive();
+    res.status(200).json({ data });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// Static methods example
+router.get("/js", async (req, res) => {
+  try {
+    const data = await Todo.findByInActive();
+    res.status(200).json({ data });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// Query helper methods - get todo by language
+router.get("/language", async (req, res) => {
+  try {
+    const data = await Todo.find().byLanguage("react");
+    res.status(200).json({ data });
+  } catch (error) {}
+});
+
 // Get a todo by ID all todos
 router.get("/:id", async (req, res) => {
   try {
