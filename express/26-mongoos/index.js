@@ -1,9 +1,12 @@
 // dependencies
 const express = require("express");
+const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const todoHandler = require("./route-handler/todoHandler");
+const userHandler = require("./route-handler/userHandler");
 
 const app = express();
+dotenv.config();
 app.use(express.json());
 
 // database connection with mongoose
@@ -17,6 +20,7 @@ mongoose
 
 // Application routes
 app.use("/todo", todoHandler);
+app.use("/user", userHandler);
 
 // default error handler
 const errorHandler = (err, req, res, next) => {
@@ -26,5 +30,7 @@ const errorHandler = (err, req, res, next) => {
     res.status(500).json({ error: err });
   }
 };
+
+app.use(errorHandler);
 
 app.listen(5000, () => console.log("server runing on port 5000"));
